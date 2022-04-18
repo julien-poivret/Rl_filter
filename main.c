@@ -15,7 +15,31 @@ typedef struct{
      the third must be initialized with a zero...
      the data base memory is then writed with the correct matching values.
 */
+/*      
+        RL Low pass circuit:  
 
+        --------   L   -----|---------O
+                            |                            
+                            |
+                          | R |
+                            |
+                            |
+                          _____
+                           GND
+
+
+        RL High pass circuit:
+       
+        -------   R   ------|--------O
+                            |
+                            |
+                          | L |
+                            |
+                            |
+                          _____
+                           GND
+
+*/
 int RL_Filter(long double R, long double L, long double Fc,RL_filter_data* data){
 	if(R==0.0 && L && Fc){
                 data->R = Fc/(2*M_PI*L);
@@ -52,11 +76,34 @@ void format_argv(char* argv[],RL_filter_data* data){
 int main(int argc,char* argv[]){
 	// Arguments handling condition.
 
-	char help[500]="\33[34mRL low Pass filter: \33[33m(let only the low frequency (like audio vs Radio frequence) when R is in parallel and L in series with in the power supply .\n"
+	char help[2000]="\33[34mRL low Pass filter: \33[33m(let only the low frequency (like audio vs Radio frequence) when R is in parallel and L in series with in the power supply .\n"
                        "\33[34mRL hight Pass filter: \33[33m(let only the High frequency passing) when R is in series and C in parallel.\n"
                        "\33[34mHelp:\33[33m\n"
                        "               fast, ( 3 cli arguments forever ):  1 Resistance, 2 Inductance, 3 Cut Off Frequency\n"
-                       "             --- at least 2 arguments non Null must be provided the last third unknow is feed at 0. ---\33[0m\n"; 
+                       "             --- at least 2 arguments non Null must be provided the last third unknow is feed at 0. ---\33[0m\n" 
+"                       \33[34mRL Low pass circuit:\33[0m            \n "
+"                                       \n "
+"                       --------   \33[33mL\33[0m   -----|---------\33[33mO\33[0m\n "
+"                                           |          \n "                 
+"                                           |          \n "
+"                                         | \33[33mR\33[0m |        \n "
+"                                           |          \n "
+"                                           |          \n "
+"                                         _____        \n "
+"                                          \33[33mGND\33[0m         \n "
+"                                                      \n "
+"                                                      \n "
+"                      \33[34mRL High pass circuit:\33[0m          \n "
+"                                                      \n "
+"                       -------   \33[33mR\33[0m   ------|---------\33[33mO\33[0m\n "
+"                                           |          \n "
+"                                           |          \n "
+"                                         | \33[33mL\33[0m |        \n "
+"                                           |          \n "
+"                                           |          \n "
+"                                         _____        \n "
+"                                          \33[33mGND\33[0m         \n ";
+
 	if(argc==1){
 		printf("%s\n",help);
 		return EXIT_SUCCESS;
